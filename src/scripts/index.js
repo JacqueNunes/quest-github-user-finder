@@ -28,6 +28,7 @@ document.getElementById('input-search').addEventListener('keyup', (e) => {
     if (isEnterKeyPressed) {
         validateEmpTyInput(userName)
         getUserData(userName)
+        getFollowers()
         // getUserRepositories(userName)
     }
 })
@@ -53,18 +54,19 @@ async function getUserData(userName) {
 async function followers() {
     const response = await fetch('https://api.github.com/users/cadudias/followers')
     return await response.json()
-
+    
 }
 
-function getFollowers() {
-    followers().then((followersData) => {
-        let followersInfo = `<div class="data">
-                                <h1>${followersData.lenght ?? 'Não possui seguidores'}</h1>
-                            </div>`
 
-        document.querySelector('.profile-data').innerHTML = followersData
+
+function getFollowers(userName) {
+    followers(userName).then((followersData) => {
+        let followersInfo = `<div class="followers">
+                                <h2>${followersData.length ?? 'Não possui seguidores'}</h2>
+                            </div>`
+                           
+        document.querySelector('.profile-data').innerHTML = followersInfo
     })
 }
 
-
-getFollowers('cadudias')
+getFollowers()

@@ -148,6 +148,11 @@ main {
   color: #fff
 }
 
+.container .profile-data .followers h2{
+  margin-bottom: 30px;
+  text-align: center;
+}
+
 .container .profile-data.hide{
   display: none;
 }
