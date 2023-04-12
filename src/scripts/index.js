@@ -1,9 +1,10 @@
 import { getUser } from '/src/scripts/services/user.js'
 import { getRepositories } from '/src/scripts/services/repositories.js'
+import { followers } from '/src/scripts/services/followers.js'
 
 import { user } from '/src/scripts/objects/user.js'
 import { screen } from '/src/scripts/objects/screen.js'
-import { baseUrl } from '/src/scripts/variables.js'
+
 
 document.getElementById('btn-search').addEventListener('click', () => {
     const userName = document.getElementById('input-search').value
@@ -28,7 +29,7 @@ document.getElementById('input-search').addEventListener('keyup', (e) => {
     if (isEnterKeyPressed) {
         validateEmpTyInput(userName)
         getUserData(userName)
-        getFollowers()
+        getFollowers(userName)
         // getUserRepositories(userName)
     }
 })
@@ -42,7 +43,8 @@ async function getUserData(userName) {
     }
     const repositoriesResponse = await getRepositories(userName)
 
-    user.setInfo(userResponse)
+    user.setInfo(user)
+    console.log(user)
     user.setRepositories(repositoriesResponse)
 
     screen.renderUser(user)
@@ -51,22 +53,11 @@ async function getUserData(userName) {
 
 //Resoluções da Quest JS Avançado//
 
-async function followers() {
-    const response = await fetch('https://api.github.com/users/cadudias/followers')
-    return await response.json()
-    
-}
-
-
 
 function getFollowers(userName) {
     followers(userName).then((followersData) => {
-        let followersInfo = `<div class="followers">
-                                <h2>${followersData.length ?? 'Não possui seguidores'}</h2>
-                            </div>`
-                           
-        document.querySelector('.profile-data').innerHTML = followersInfo
+        
     })
 }
 
-getFollowers()
+

@@ -9,7 +9,7 @@ const screen = {
                                                   <p>${user.bio ?? `Não possui bio cadastrada 🥲`}</p>
                                              </div>
                                         </div>`
-
+           
         let repositoriesItens = ''
         user.repositories.forEach(repo => repositoriesItens += `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`)
 
