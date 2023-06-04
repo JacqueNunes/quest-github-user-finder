@@ -1,9 +1,9 @@
 import { getUser } from '/src/scripts/services/user.js'
 import { getRepositories } from '/src/scripts/services/repositories.js'
-import { followers } from '/src/scripts/services/followers.js'
 
 import { user } from '/src/scripts/objects/user.js'
 import { screen } from '/src/scripts/objects/screen.js'
+import { events } from '/src/scripts/services/event.js'
 
 
 document.getElementById('btn-search').addEventListener('click', () => {
@@ -11,7 +11,6 @@ document.getElementById('btn-search').addEventListener('click', () => {
 
     if (validateEmpTyInput(userName)) return
     getUserData(userName)
-    // getUserRepositories(userName)
 })
 
 function validateEmpTyInput(userName) {
@@ -29,8 +28,7 @@ document.getElementById('input-search').addEventListener('keyup', (e) => {
     if (isEnterKeyPressed) {
         validateEmpTyInput(userName)
         getUserData(userName)
-        getFollowers(userName)
-        // getUserRepositories(userName)
+        events(userName)
     }
 })
 
@@ -42,22 +40,11 @@ async function getUserData(userName) {
         return
     }
     const repositoriesResponse = await getRepositories(userName)
+    const eventsResponse = await events(userName)
 
-    user.setInfo(user)
-    console.log(user)
+    user.setInfo(userResponse)
     user.setRepositories(repositoriesResponse)
-
-    screen.renderUser(user)
+    user.setEvents(eventsResponse)
+      screen.renderUser(user)
 
 }
-
-//Resoluções da Quest JS Avançado//
-
-
-function getFollowers(userName) {
-    followers(userName).then((followersData) => {
-        
-    })
-}
-
-
